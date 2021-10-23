@@ -5,8 +5,10 @@
  */
 package pantallas;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import ClasesDominio.Publicacion;
+import Datos.CtrlPublicacion;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 
@@ -25,25 +27,35 @@ public class FrmInicio extends javax.swing.JFrame {
     public FrmInicio() {
         initComponents(); 
         setLocationRelativeTo(null);
-        txtMuro.setText("Aquí se mostrará una publicación");
-        nuevaLinea(txtMuro); nuevaLinea(txtMuro);
-        txtMuro.setCaretPosition(txtMuro.getStyledDocument().getLength());
-        JButton boton = new JButton("Comentar");
-        txtMuro.insertComponent(boton);;
+        mostrarPublicaciones();
     }
 
     //Método para cambiar de línea
-	private void nuevaLinea(JTextPane text){
+    private void nuevaLinea(JTextPane text) {
 
-		try {
-			text.getStyledDocument().insertString(
-				text.getStyledDocument().getLength(),
-				System.getProperty("line.separator"), null);
-		} catch (BadLocationException ex) {
-			
-		}
-        
-	}
+        try {
+            text.getStyledDocument().insertString(
+                    text.getStyledDocument().getLength(),
+                    System.getProperty("line.separator"), null);
+        } catch (BadLocationException ex) {
+
+        }
+
+    }
+    
+    private void mostrarPublicaciones() {
+        CtrlPublicacion ctrl=new CtrlPublicacion();
+        List<Publicacion> p= new ArrayList<>();
+        p = ctrl.consultar();
+        for (int i = 0; i < p.size(); i++) {
+            txtMuro.setText("prueba: "+p.get(i).getFechaHora().toString());
+            txtMuro.setText(p.get(i).getContenidoTex());
+            nuevaLinea(txtMuro); nuevaLinea(txtMuro);
+            txtMuro.setCaretPosition(txtMuro.getStyledDocument().getLength());
+            JButton boton = new JButton("Comentar");
+            txtMuro.insertComponent(boton);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

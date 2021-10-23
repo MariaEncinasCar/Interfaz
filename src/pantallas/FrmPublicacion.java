@@ -5,7 +5,10 @@
  */
 package pantallas;
 
-import javax.swing.JFileChooser;
+import ClasesDominio.Publicacion;
+import Datos.CtrlPublicacion;
+import java.util.Date;
+import javax.swing.JFileChooser;;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import otroPaquetito.TextPrompt;
 
@@ -25,6 +28,16 @@ public class FrmPublicacion extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         new TextPrompt("En este cuadro va el texto de una publicación", txtPublicacion);
         new TextPrompt("La ubicación en el equipo de la imagen seleccionada", txtImagen);
+    }
+    
+    private void guardar(){
+        Publicacion p = new Publicacion();
+        CtrlPublicacion ctrl = new CtrlPublicacion();
+        
+        p.setContenidoTex(txtPublicacion.getText());
+        Date d=new Date();
+        p.setFechaHora(d);
+        ctrl.guardar(p);
     }
 
     /**
@@ -121,6 +134,7 @@ public class FrmPublicacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImagenActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        guardar();
         FrmInicio frmInicio = new FrmInicio();
         frmInicio.setVisible(true);
         this.dispose();
