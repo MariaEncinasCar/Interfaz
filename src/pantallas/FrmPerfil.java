@@ -1,23 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pantallas;
 
+import clasesfaceboot.Usuario;
+import javax.swing.JOptionPane;
 import otroPaquetito.TextPrompt;
 
-/**
- *
- * @author Orlando Mendivil
- */
 public class FrmPerfil extends javax.swing.JFrame {
-
+    Usuario usuario;
     /**
      * Creates new form frmPerfil
      */
     public FrmPerfil() {
         initComponents();
+        usuario = new Usuario();
         new TextPrompt("Nombre", txt_Nombre);
         new TextPrompt("Correo electrónico", txt_CorreoElectronico);
         new TextPrompt("Número telefónico", txt_NumTelefonico);
@@ -72,24 +66,31 @@ public class FrmPerfil extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(255, 255, 255), null));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
+        txt_CorreoElectronico.setEditable(false);
         txt_CorreoElectronico.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        txt_CorreoElectronico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txt_CorreoElectronico.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         txt_Nombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        txt_Nombre.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txt_Nombre.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
+        txt_NumTelefonico.setEditable(false);
         txt_NumTelefonico.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        txt_NumTelefonico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txt_NumTelefonico.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         txt_Edad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        txt_Edad.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txt_Edad.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txt_Edad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_EdadKeyTyped(evt);
+            }
+        });
 
         btnGuardar.setBackground(new java.awt.Color(0, 102, 255));
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar_Nom.png"))); // NOI18N
         btnGuardar.setBorder(null);
         btnGuardar.setBorderPainted(false);
-        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar_Press.png"))); // NOI18N
         btnGuardar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar_Roll.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -116,7 +117,7 @@ public class FrmPerfil extends javax.swing.JFrame {
 
         buttonGroup1.add(rb_Femenino);
         rb_Femenino.setText("Femenino");
-        rb_Femenino.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rb_Femenino.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -140,7 +141,7 @@ public class FrmPerfil extends javax.swing.JFrame {
 
         buttonGroup1.add(rb_Masculino);
         rb_Masculino.setText("Masculino");
-        rb_Masculino.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rb_Masculino.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -307,23 +308,78 @@ public class FrmPerfil extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Sección de menú que te lleva a la pantalla del Perfil de usuario.
+     * @param evt El click del usuario.
+     */
     private void menu_PerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_PerfilMouseClicked
         FrmPerfil frmPerfil = new FrmPerfil();
         frmPerfil.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menu_PerfilMouseClicked
 
+    /**
+     * Sección de menú que te lleva a la pantalla Inicio.
+     * @param evt El click del usuario.
+     */
     private void menu_InicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_InicioMouseClicked
         FrmInicio frmInicio = new FrmInicio();
         frmInicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menu_InicioMouseClicked
 
+    /**
+     * Boton que guarda los nuevos datos del usuario.
+     * @param evt El click del usuario.
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        actualizarDatos();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    /**
+     * Método que no permite escribir caracteres diferentes a digitos.
+     * @param evt La tecla que se presiono.
+     */
+    private void txt_EdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_EdadKeyTyped
+        char c = evt.getKeyChar();
+        
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_EdadKeyTyped
+    
+    /**
+     * Método que actualiza los datos del usuario.
+     */
+    private void actualizarDatos()
+    {
+        if (this.txt_Nombre.getText().isEmpty() || this.txt_Fecha.getDate() == null || this.txt_Edad.getText().isEmpty() || !this.rb_Femenino.isSelected() && !this.rb_Masculino.isSelected()) 
+        {
+            JOptionPane.showMessageDialog(null, "Los campos tienen que ser llenados.", "Llene los campos.", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        usuario.setNombre(this.txt_Nombre.getText());
+        usuario.setFechaNac(this.txt_Fecha.getDate());
+        usuario.setEdad(Integer.parseInt(this.txt_Edad.getText())); 
+        
+         if (this.rb_Femenino.isSelected()) 
+            usuario.setSexo("Femenino");
+         else 
+            usuario.setSexo("Masculino");
+          
+        JOptionPane.showMessageDialog(null, "Los datos han sido actualizados.", "Exito!!", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    /**
+     * Método que llena los datos del perfil. |Este método aun no puede usarse debido a que se necesita tener a un usuario registrado.|
+     */
+    private void llenarDatos(){
+        this.txt_CorreoElectronico.setText(usuario.getEmail());
+        this.txt_NumTelefonico.setText(usuario.getCelular());
+    }
+    
     /**
      * @param args the command line arguments
      */
