@@ -1,2 +1,0 @@
-esto si se sube o no
-- si ven esto, ignorenlo, estoy viendo como funciona git :u
