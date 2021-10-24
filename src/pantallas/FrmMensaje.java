@@ -5,6 +5,10 @@
  */
 package pantallas;
 
+import clasesfaceboot.Usuario;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,12 +17,29 @@ import javax.swing.JOptionPane;
  */
 public class FrmMensaje extends javax.swing.JFrame {
 
+    List<Usuario> listaUsuarios= new ArrayList<>();
+    
     /**
      * Creates new form FrmMensaje
      */
     public FrmMensaje() {
         initComponents();
-        setLocationRelativeTo(null);
+        JOptionPane.showMessageDialog(null, "1");
+        llenarUsuarios();
+        JOptionPane.showMessageDialog(null, "3");
+        setLocationRelativeTo(this);
+    }
+    
+    private void llenarUsuarios(){
+        JOptionPane.showMessageDialog(null, "2");
+        listaUsuarios.add(new Usuario("Jorge Estrada", "jorge.estrada@gmail.com", "12345", "6449987653", "masculino", new Date(1980, 1, 22), 41));
+        listaUsuarios.add(new Usuario("Karla Mendivil", "mendivilk@gmail.com", "12345", "6441829190", "femenino", new Date(1997, 7, 15), 24));
+        listaUsuarios.add(new Usuario("José María Morelos y Pavón", "maria_morelos@gmail.com", "12345", "6623987012", "masculino", new Date(1980, 9, 30), 41));
+        
+        
+        for (Usuario v : listaUsuarios) {
+            cmbUsuarios.addItem("hola");
+        }
     }
 
     /**
@@ -34,7 +55,7 @@ public class FrmMensaje extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbUsuarios = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
@@ -52,8 +73,7 @@ public class FrmMensaje extends javax.swing.JFrame {
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Correo electrónico", "Teléfono celular" }));
 
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Enviar vía:");
@@ -95,7 +115,7 @@ public class FrmMensaje extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(60, Short.MAX_VALUE))
@@ -113,7 +133,7 @@ public class FrmMensaje extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -159,8 +179,8 @@ public class FrmMensaje extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox<String> cmbUsuarios;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
