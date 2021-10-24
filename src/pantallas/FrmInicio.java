@@ -7,7 +7,9 @@ package pantallas;
 
 import clasesfaceboot.Publicacion;
 import Datos.CtrlPublicacion;
-import java.util.ArrayList;
+import java.awt.Component;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -19,15 +21,17 @@ import javax.swing.text.BadLocationException;
  * @author Orlando Mendivil
  */
 public class FrmInicio extends javax.swing.JFrame {
+   
+    CtrlPublicacion ctrl = new CtrlPublicacion();
+    List<Publicacion> listaPublicaciones = ctrl.consultar();
 
-    
     /**
      * Creates new form frmPrincipal
      */
     public FrmInicio() {
-        initComponents(); 
-        setLocationRelativeTo(null);
+        initComponents();
         mostrarPublicaciones();
+        setLocationRelativeTo(this); 
     }
 
     //Método para cambiar de línea
@@ -43,17 +47,33 @@ public class FrmInicio extends javax.swing.JFrame {
 
     }
     
-    private void mostrarPublicaciones() {
-        CtrlPublicacion ctrl=new CtrlPublicacion();
-        List<Publicacion> p= new ArrayList<>();
-        p = ctrl.consultar();
-        for (int i = 0; i < p.size(); i++) {
-            txtMuro.setText("prueba: "+p.get(i).getFechaHora().toString());
-            txtMuro.setText(p.get(i).getContenidoTex());
-            nuevaLinea(txtMuro); nuevaLinea(txtMuro);
-            txtMuro.setCaretPosition(txtMuro.getStyledDocument().getLength());
-            JButton boton = new JButton("Comentar");
-            txtMuro.insertComponent(boton);
+    private void botonComentar(){
+        txtMuro.setCaretPosition(txtMuro.getStyledDocument().getLength());
+        JButton boton = new JButton("Comentar");
+        txtMuro.insertComponent(boton);
+    }
+    
+    private void mostrarPublicaciones() { 
+        String text_actual;
+
+        for (int i = 0; i < listaPublicaciones.size(); i++) {
+            nuevaLinea(txtMuro);
+            text_actual = txtMuro.getText();
+            txtMuro.setText(text_actual+listaPublicaciones.get(i).getUsuario().getNombre());
+            nuevaLinea(txtMuro);
+            text_actual = txtMuro.getText();
+            txtMuro.setText(text_actual
+                    +listaPublicaciones.get(i).getFechaHora().getDate()+"/"
+                    +listaPublicaciones.get(i).getFechaHora().getMonth()+"/"
+                    +(listaPublicaciones.get(i).getFechaHora().getYear()+1900)+" "
+                    +listaPublicaciones.get(i).getFechaHora().getHours()+":"
+                    +listaPublicaciones.get(i).getFechaHora().getMinutes());
+            nuevaLinea(txtMuro);
+            text_actual = txtMuro.getText(); 
+            txtMuro.setText(text_actual+listaPublicaciones.get(i).getContenidoTex());  
+            nuevaLinea(txtMuro);nuevaLinea(txtMuro);       
+            botonComentar();
+            txtMuro.setMargin(new Insets(0, 50, 0, 0));
         }
     }
 
@@ -86,6 +106,7 @@ public class FrmInicio extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(242, 242, 242));
 
         txtMuro.setEditable(false);
+        txtMuro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(txtMuro);
 
         btnPublicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/publicar_Nom.png"))); // NOI18N

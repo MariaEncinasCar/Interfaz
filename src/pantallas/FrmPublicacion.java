@@ -7,8 +7,11 @@ package pantallas;
 
 import clasesfaceboot.Publicacion;
 import Datos.CtrlPublicacion;
+import clasesfaceboot.Usuario;
 import java.util.Date;
-import javax.swing.JFileChooser;;
+import java.util.List;
+import javax.swing.JFileChooser;import javax.swing.JOptionPane;
+;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import otroPaquetito.TextPrompt;
 
@@ -19,6 +22,8 @@ import otroPaquetito.TextPrompt;
 public class FrmPublicacion extends javax.swing.JFrame {
     
     private FileNameExtensionFilter filter= new FileNameExtensionFilter("Archivo de imagen", "jpeg");
+    CtrlPublicacion ctrl = new CtrlPublicacion();
+    List<Publicacion> listaPublicaciones = ctrl.consultar();
 
     /**
      * Creates new form frmPublicacion
@@ -26,18 +31,20 @@ public class FrmPublicacion extends javax.swing.JFrame {
     public FrmPublicacion() {
         initComponents();
         setLocationRelativeTo(null);
-        new TextPrompt("En este cuadro va el texto de una publicación", txtPublicacion);
+        new TextPrompt("0/200", txtPublicacion);
         new TextPrompt("La ubicación en el equipo de la imagen seleccionada", txtImagen);
     }
     
     private void guardar(){
-        Publicacion p = new Publicacion();
-        CtrlPublicacion ctrl = new CtrlPublicacion();
+        Publicacion p = new Publicacion(); 
         
         p.setContenidoTex(txtPublicacion.getText());
         Date d=new Date();
+        Usuario u=new Usuario();
+        u.setNombre("José María Morelos y Pavón");
+        p.setUsuario(u);
         p.setFechaHora(d);
-        ctrl.guardar(p);
+        ctrl.guardar(p);   
     }
 
     /**
@@ -81,6 +88,11 @@ public class FrmPublicacion extends javax.swing.JFrame {
 
         txtPublicacion.setColumns(20);
         txtPublicacion.setRows(5);
+        txtPublicacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPublicacionKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtPublicacion);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 500, 190));
@@ -145,6 +157,17 @@ public class FrmPublicacion extends javax.swing.JFrame {
         frmInicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtPublicacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPublicacionKeyTyped
+        // No más de 200 caracteres
+        if (txtPublicacion.getText().length() == 200){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Respetar el límite de caracteres"); 
+        }
+
+         
+    }//GEN-LAST:event_txtPublicacionKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
