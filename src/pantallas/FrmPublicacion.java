@@ -5,7 +5,7 @@
  */
 package pantallas;
 
-import ClasesDominio.Publicacion;
+import clasesfaceboot.Publicacion;
 import Datos.CtrlPublicacion;
 import java.util.Date;
 import javax.swing.JFileChooser;;

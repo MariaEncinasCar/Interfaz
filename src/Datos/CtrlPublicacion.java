@@ -5,7 +5,7 @@
  */
 package Datos;
 
-import ClasesDominio.Publicacion;
+import clasesfaceboot.Publicacion;
 import java.util.ArrayList;
 import java.util.List;
 
