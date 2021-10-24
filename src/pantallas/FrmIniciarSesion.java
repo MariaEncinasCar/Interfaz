@@ -5,8 +5,14 @@
  */
 package pantallas;
 
+import Datos.UsuariosDatos;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 
 public class FrmIniciarSesion extends javax.swing.JFrame {
+    
+    UsuariosDatos ctrl = new UsuariosDatos();
     
     /**
      * Creates new form PantallaInicio
@@ -14,6 +20,15 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
     public FrmIniciarSesion() {
         initComponents();
         setLocationRelativeTo(null);
+//        System.err.println("Usuarios: " + this.ctrl.toString());
+
+    }
+
+    public FrmIniciarSesion(UsuariosDatos ctrl) {
+        initComponents();
+        setLocationRelativeTo(null);
+        this.ctrl = ctrl;
+//        System.err.println("Usuarios: " + this.ctrl.toString());
     }
 
     /**
@@ -27,7 +42,7 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         labelUsuarioMuestra = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         pwdContrasenia = new javax.swing.JPasswordField();
         btn_IniciarSesion = new javax.swing.JButton();
         btnCrearCuenta = new javax.swing.JButton();
@@ -37,23 +52,23 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iniciar Sesión");
-        setPreferredSize(new java.awt.Dimension(396, 588));
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         labelUsuarioMuestra.setBackground(new java.awt.Color(255, 255, 255));
         labelUsuarioMuestra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Perfil.jpg"))); // NOI18N
 
-        txtNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNombre.setText("Nombre");
-        txtNombre.setToolTipText("Nombre");
-        txtNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtEmail.setText("Correo Electrónico");
+        txtEmail.setToolTipText("Correo Electrónico");
+        txtEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombreFocusGained(evt);
+                txtEmailFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombreFocusLost(evt);
+                txtEmailFocusLost(evt);
             }
         });
 
@@ -74,6 +89,7 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
         btn_IniciarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/inicio_Nom.png"))); // NOI18N
         btn_IniciarSesion.setBorder(null);
         btn_IniciarSesion.setBorderPainted(false);
+        btn_IniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_IniciarSesion.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/inicio_Press.png"))); // NOI18N
         btn_IniciarSesion.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/inicio_Roll.png"))); // NOI18N
         btn_IniciarSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -87,6 +103,7 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
         btnCrearCuenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/crearCuenta_Nom.png"))); // NOI18N
         btnCrearCuenta.setBorder(null);
         btnCrearCuenta.setBorderPainted(false);
+        btnCrearCuenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCrearCuenta.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/crearCuenta_Press.png"))); // NOI18N
         btnCrearCuenta.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/crearCuenta_Roll.png"))); // NOI18N
         btnCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +128,7 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
                         .addComponent(labelUsuarioMuestra))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(pwdContrasenia)
-                        .addComponent(txtNombre)
+                        .addComponent(txtEmail)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -132,7 +149,7 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
                 .addGap(55, 55, 55)
                 .addComponent(labelUsuarioMuestra)
                 .addGap(39, 39, 39)
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(pwdContrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
@@ -156,50 +173,77 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusGained
-        String nombre = txtNombre.getText();
-        if (nombre.equals("Nombre")) {
-            txtNombre.setText("");
+    private void txtEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusGained
+        String email = txtEmail.getText().trim();
+        if (email.equals("Correo Electrónico")) {
+            txtEmail.setText("");
         }
-    }//GEN-LAST:event_txtNombreFocusGained
+    }//GEN-LAST:event_txtEmailFocusGained
 
     private void pwdContraseniaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwdContraseniaFocusGained
-        String contrasenia = pwdContrasenia.getText();
+        String contrasenia = pwdContrasenia.getText().trim();
         if (contrasenia.equals("Contraseña")) {
-            pwdContrasenia.setText("Juan Villa Villanueva");
+            pwdContrasenia.setText("");
         }
     }//GEN-LAST:event_pwdContraseniaFocusGained
 
-    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
-        String nombre = txtNombre.getText();
-        if (nombre.isEmpty()) {
-            txtNombre.setText("Juan Villa Villanueva");
+    private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
+        String email = txtEmail.getText().trim();
+        if (email.isEmpty()) {
+            txtEmail.setText("Correo Electrónico");
         }
-    }//GEN-LAST:event_txtNombreFocusLost
+        else {
+            Pattern pattern = Pattern
+                    .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+
+            Matcher mather = pattern.matcher(email);
+
+            if (mather.find() == false) {
+                JOptionPane.showMessageDialog(null, "El email ingresado es inválido.",
+                        "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+                txtEmail.setText("Correo Electrónico");
+            }
+        }
+    }//GEN-LAST:event_txtEmailFocusLost
 
     private void pwdContraseniaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwdContraseniaFocusLost
-        String contrasenia = pwdContrasenia.getText();
+        String contrasenia = pwdContrasenia.getText().trim();
         if (contrasenia.isEmpty()) {
             pwdContrasenia.setText("Contraseña");
         }
     }//GEN-LAST:event_pwdContraseniaFocusLost
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
-        FrmRegistrar frmRegistrar = new FrmRegistrar();
-        frmRegistrar.setVisible(true);
-        
+        new FrmRegistrar(ctrl).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     private void btn_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_IniciarSesionActionPerformed
-        FrmInicio frmInicio = new FrmInicio();
-        frmInicio.setVisible(true);
-        this.dispose();
+        String email = txtEmail.getText().trim().toLowerCase();
+                       
+        char contra[] = pwdContrasenia.getPassword();
+        String contraLib = new String(contra);
+       
+        if (ctrl.usuario(email, contraLib) != null) {
+            FrmInicio frmInicio = new FrmInicio();
+            frmInicio.setVisible(true);
+            this.dispose();
+            JOptionPane.showMessageDialog(null, "Bienvenido\n", 
+                    "Mensaje de bienvenida", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Acceso denegado:\n Datos incorrectos",
+                    "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
     }//GEN-LAST:event_btn_IniciarSesionActionPerformed
 
     /**
@@ -235,6 +279,14 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -253,6 +305,6 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel labelUsuarioMuestra;
     private javax.swing.JPasswordField pwdContrasenia;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtEmail;
     // End of variables declaration//GEN-END:variables
 }
