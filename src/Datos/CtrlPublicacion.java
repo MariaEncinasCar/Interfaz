@@ -15,12 +15,8 @@ import java.util.List;
  */
 public class CtrlPublicacion {
     
-    private List<Publicacion> LPublicaciones;
+    private List<Publicacion> LPublicaciones = new ArrayList<>();
 
-    public CtrlPublicacion() {
-        LPublicaciones = new ArrayList<>();
-    }
-    
     /**
      * Método que guarda una publicación
      *
