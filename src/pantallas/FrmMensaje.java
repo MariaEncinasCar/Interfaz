@@ -24,21 +24,18 @@ public class FrmMensaje extends javax.swing.JFrame {
      */
     public FrmMensaje() {
         initComponents();
-        JOptionPane.showMessageDialog(null, "1");
         llenarUsuarios();
-        JOptionPane.showMessageDialog(null, "3");
         setLocationRelativeTo(this);
     }
     
     private void llenarUsuarios(){
-        JOptionPane.showMessageDialog(null, "2");
         listaUsuarios.add(new Usuario("Jorge Estrada", "jorge.estrada@gmail.com", "12345", "6449987653", "masculino", new Date(1980, 1, 22), 41));
         listaUsuarios.add(new Usuario("Karla Mendivil", "mendivilk@gmail.com", "12345", "6441829190", "femenino", new Date(1997, 7, 15), 24));
         listaUsuarios.add(new Usuario("José María Morelos y Pavón", "maria_morelos@gmail.com", "12345", "6623987012", "masculino", new Date(1980, 9, 30), 41));
         
         
         for (Usuario v : listaUsuarios) {
-            cmbUsuarios.addItem("hola");
+            cmbUsuarios.addItem(v.getNombre()+", "+v.getEmail());
         }
     }
 
